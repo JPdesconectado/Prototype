@@ -1,0 +1,24 @@
+{% extends 'detracan/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class = "container">
+	<div class="row">
+		<div class="col-sm-4">
+			<a href = "{% url 'lista_solicitacao' %}" ><img src="{% static 'imagensButton/semaforo.png' %}" width="150" height="150" ></a>
+ 			<h1> Semáforo </h1>
+ 		</div>
+
+ 		<div class="col-sm-4">
+			<a href = "{% url 'lista_solicitacao' %}" ><img src="{% static 'imagensButton/acidente.png' %}" width="250" height="150" ></a>
+ 			<h1> Acidente </h1>
+ 		</div>
+
+ 		<div class="col-sm-4">
+			<a href = "{% url 'lista_solicitacao' %}" ><img src="{% static 'imagensButton/estacionamento_irregular.png' %}" width="150" height="150" ></a>
+ 			<h1> Estacionamento Irregular </h1>
+ 		</div>
+	</div>
+</div>
+{% endblock %}

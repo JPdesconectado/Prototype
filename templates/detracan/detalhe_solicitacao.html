@@ -1,0 +1,9 @@
+{% extends 'detracan/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+   <div class="post">
+   	 	<h2>{{ solicitacao.tipo }}</h2>
+        <p>{{ solicitacao.comentario|linebreaksbr }}</p>
+    </div>
+{% endblock %}
