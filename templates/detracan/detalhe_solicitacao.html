@@ -3,7 +3,17 @@
 
 {% block content %}
    <div class="post">
-   	 	<h2>{{ solicitacao.tipo }}</h2>
-        <p>{{ solicitacao.comentario|linebreaksbr }}</p>
+   		<div class="container">
+	   		<div class="lista-centralizada">
+				<h2>{{ solicitacao.tipo }}</h2>
+		   	</div>
+		   	<div class="lista-centralizada">
+		   		<p><img src="{{ solicitacao.imagem.url}}" width="150" height="150"></p>
+			</div>
+			<div class="titulo">
+		        <p>{{ solicitacao.comentario|linebreaksbr }}</p>
+		    </div>
+		    </div>
+		</div>
     </div>
 {% endblock %}

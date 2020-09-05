@@ -8,11 +8,12 @@ from .forms import FormularioSolicitacao
 def inicio(request):
     return render(request, 'detracan/inicio.html')
 
-
+@login_required
 def lista_solicitacao(request):
     solicitacoes = Solicitacao.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
     return render(request, 'detracan/lista_solicitacao.html', {'solicitacoes' : solicitacoes})
 
+@login_required
 def detalhe_solicitacao(request, pk):
     solicitacao = get_object_or_404(Solicitacao, pk=pk)
     return render(request, 'detracan/detalhe_solicitacao.html', {'solicitacao': solicitacao})

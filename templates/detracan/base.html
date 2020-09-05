@@ -11,9 +11,10 @@
     <body>
     <div class="page-header">
         {% if user.is_authenticated %}
-            <a href="{% url 'nova_solicitacao' %}" class="iconesInOut"><span class="glyphicon glyphicon-plus"></span></a>
+			<a href="{% url 'lista_solicitacao' %}" class="icones"><span class="glyphicon glyphicon-user"></a>  
+            <a href="{% url 'nova_solicitacao' %}" class="icones"><span class="glyphicon glyphicon-plus"></a>
             <a href="{% url 'logout' %}" class="iconesInOut"><span class="glyphicon glyphicon-log-out"></a>
-            <a href="{% url 'lista_solicitacao' %}" class="iconesInOut"><span class="glyphicon glyphicon-home"></a>    
+             
             <p class="username">Olá, {{ user.username }} </p>
 
 
@@ -25,7 +26,12 @@
 
         <div class="container">
             <div class="titulo">
-                <h1><a href="/">HELP? CAN!</a></h1>
+            	{% if user.is_authenticated %}
+                	<h1><a href="{% url 'lista_solicitacao' %}">HELP? CAN!</a></h1>
+                {% else %}
+                	<h1><a href="{% url 'inicio' %}">HELP? CAN!</a></h1>
+                {% endif %}
+
             </div>
         </div>
     </div>

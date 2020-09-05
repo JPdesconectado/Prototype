@@ -1,6 +1,8 @@
 from django import forms
 from .models import Solicitacao
 
+
+
 class FormularioSolicitacao(forms.ModelForm):
 
 	class Meta:
