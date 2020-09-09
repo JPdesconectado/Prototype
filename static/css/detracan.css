@@ -39,6 +39,7 @@ h1, h2, h3, h4 {
 
 .post {
     margin-bottom: 50px;
+    font-size: 15pt;
 }
 
 .post h2 a, .post h2 a:visited {
@@ -74,6 +75,7 @@ h1, h2, h3, h4 {
 }
 
 .lista-centralizada{
+    font-size: 30pt;
     text-align: center;
     border: solid black;
     border-width: 0px 0px 2px 0px;
@@ -82,4 +84,45 @@ h1, h2, h3, h4 {
 .titulo-barra{
     border: solid black;
     border-width: 0px 0px 2px 0px;
+}
+
+.tipo-detalhado{
+    font-size: 50pt;
+    text-align: center;
+    border: solid black;
+    border-width: 0px 0px 2px 0px;
+}
+
+.recebido{
+    color: #000000;
+    font-family: 'Lobster';
+    text-align: center;
+    font-size: 25pt;
+}
+.em-andamento{
+    color: #cc9900;
+    font-family: 'Lobster';
+    text-align: center;
+    font-size: 25pt;
+}
+
+.recusado{
+    color: #ff0000;
+    font-family: 'Lobster';
+    text-align: center;
+    font-size: 25pt;
+}
+
+.concluido{
+    color: #00ff00;
+    font-family: 'Lobster';
+    text-align: center;
+    font-size: 25pt;
+}
+
+.iconeEdit{
+    color: #000000;
+    font-size: 20pt;
+    float: left;
+    padding: 25px 0px 0px 20px;
 }

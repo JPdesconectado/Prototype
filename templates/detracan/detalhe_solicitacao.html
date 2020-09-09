@@ -3,17 +3,38 @@
 
 {% block content %}
    <div class="post">
+   	{% if user.is_superuser %}
+   	 <a class="iconeEdit" href="{% url 'editar_status' pk=solicitacao.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+   	{% endif %}
    		<div class="container">
-	   		<div class="lista-centralizada">
+	   		<div class="tipo-detalhado">
 				<h2>{{ solicitacao.tipo }}</h2>
 		   	</div>
 		   	<div class="lista-centralizada">
-		   		<p><img src="{{ solicitacao.imagem.url}}" width="150" height="150"></p>
+		   		<p><img src="{{ solicitacao.imagem.url}}" width="300" height="300"></p>
 			</div>
-			<div class="titulo">
-		        <p>{{ solicitacao.comentario|linebreaksbr }}</p>
-		    </div>
+				{% if solicitacao.status.atual == "Recebido" %}
+					<div class="recebido">
+					<p>Status: {{ solicitacao.status.atual }}</p>
+					</div>
+				{% endif %}
+				{% if solicitacao.status.atual == "Em andamento" %}
+					<div class="em-andamento">
+					<p>Status: {{ solicitacao.status.atual }}</p>
+					</div>
+				{% endif %}
+				
+				{% if solicitacao.status.atual == "Recusado" %}
+					<div class="recusado">
+					<p>Status: {{ solicitacao.status.atual }}</p>
+					</div>
+				{% endif %}
+				
+				{% if solicitacao.status.atual == "Concluído" %}
+					<div class="concluido">
+					<p> Status: {{ solicitacao.status.atual }}</p>
+					</div>	
+				{% endif %}			
 		    </div>
 		</div>
-    </div>
 {% endblock %}

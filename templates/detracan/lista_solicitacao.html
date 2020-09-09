@@ -12,11 +12,11 @@
   		{% for solicitacao in solicitacoes %}
   				<div class="lista-centralizada">
         			<div class="post">
-        				<div class="date">
-        					{{ solicitacao_data_criacao }}
-           				</div>
             			<h1><a href="{% url 'detalhe_solicitacao' pk=solicitacao.pk %}">{{ solicitacao.tipo }}</a></h1>
-                   <p>{{ solicitacao.comentario|linebreaksbr }}</p>
+              <div class="date">
+                  {{ solicitacao.data_criacao }}
+              </div>
+                  <p>Status: {{ solicitacao.status.atual }}</p>
         		</div>
         	</div>
     	{% endfor %}
