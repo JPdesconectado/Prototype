@@ -8,7 +8,7 @@ class ProfileUserCreationForm(UserCreationForm):
     password2 = forms.CharField(label='Confirmar Senha:', widget=forms.PasswordInput)
     class Meta:
             model = ProfileUser
-            fields = ('username', 'nome', 'email', 'data_nascimento', 'cadastro_pf',)
+            fields = ('username', 'nome', 'email', 'data_nascimento',)
 
             help_texts = {
             'username': None,
@@ -16,7 +16,6 @@ class ProfileUserCreationForm(UserCreationForm):
             'email': None,
             'password1': None,
             'password2': None,
-            'cadastro_pf': None,
             }
 
 
@@ -24,4 +23,4 @@ class ProfileUserChangeForm(UserChangeForm):
 
     class Meta:
         model = ProfileUser
-        fields = ('username', 'nome', 'email', 'data_nascimento', 'cadastro_pf',)        
+        fields = ('username', 'nome', 'email', 'data_nascimento',)        

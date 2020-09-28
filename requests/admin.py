@@ -1,4 +1,5 @@
 from django.contrib import admin
-from .models import Solicitacao
+from .models import SolicitacaoTransito, SolicitacaoEducacao
 
-admin.site.register(Solicitacao)
+admin.site.register(SolicitacaoTransito)
+admin.site.register(SolicitacaoEducacao)

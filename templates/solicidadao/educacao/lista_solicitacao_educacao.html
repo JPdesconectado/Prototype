@@ -1,0 +1,26 @@
+{% extends 'solicidadao/base_educacao.html' %}
+{% block content %}
+	<div class="container">
+		<h2 class="text-uppercase text-white font-weight-bold"> Solicitações </h2>
+		<hr class="divider my-4" />
+	</div>
+	<div class="container">
+		 <div class="row justify-content-center">
+		{% for solicitacao_educacao in solicitacoes_educacao %}
+        <div class="col-lg-3 col-md-6 text-center">
+            <div class="mt-5">
+            	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_educacao' pk=solicitacao_educacao.pk %}">{{ solicitacao_educacao.nome }}</a>
+                <p class="text-white-50 mb-4">{{ solicitacao_educacao.comentario|linebreaksbr }}</p>
+        		</div>
+        	</div>
+    	{% endfor %}
+        </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 align-self-baseline">
+         <a class="btn btn-light btn-xl" href="{% url 'nova_solicitacao_educacao' %}">Solicitar</a>
+     </div>
+    </div>
+</div>
+
+{% endblock %}    
+  

@@ -1,0 +1,11 @@
+{% extends 'solicidadao/base_transito.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+   <h2>Nova Solicitação</h2>
+    <form method="POST" enctype="multipart/form-data">
+	    {% csrf_token %}
+	    {{ form|crispy }}
+	    <input type = "submit" value = "Enviar" />
+	</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'solicidadao/base_educacao.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container">
+		<h2 class="text-white mt-0"> {{ solicitacao_educacao.comentario }} </h2>
+		<hr class="divider my-4" />
+	</div>
+<div class="row justify-content-center">
+    <div class="col-lg-3 col-md-6 text-center">
+        <div class="mt-5">
+        	<p class="text-white-50 mb-5">{{ solicitacao_educacao.data_criacao }}</p>
+    	</div>
+    </div>
+</div>
+{% endblock %}
