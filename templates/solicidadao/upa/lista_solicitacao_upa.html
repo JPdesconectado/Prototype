@@ -7,11 +7,10 @@
 	<div class="container">
 		 <div class="row justify-content-center">
 		{% for solicitacao_upa in solicitacoes_upa %}
-        <div class="col-lg-4 col-md-6 text-center">
+        <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-            	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_upa' pk=solicitacao_upa.pk %}">Informações</a>
-                <p class="text-white-50 mb-3">RG: {{ solicitacao_upa.rg}}</p>
-                <p class="text-white-50 mb-3">N° SUS:{{ solicitacao_upa.card_sus}}</p>
+            	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_upa' pk=solicitacao_upa.pk %}">{{ solicitacao_upa.card_sus }}</a>
+                <p class="text-white-50 mb-4">{{ solicitacao_upa.rg|linebreaksbr }}</p>
         		</div>
         	</div>
     	{% endfor %}

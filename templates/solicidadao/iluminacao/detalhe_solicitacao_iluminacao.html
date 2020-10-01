@@ -3,26 +3,14 @@
 
 {% block content %}
 	<div class="container">
-        <h2 class="text-white mt-0"> INFORMAÇÕES</h2>
+		<h2 class="text-white mt-0"> {{ solicitacao_iluminacao.comentario }} </h2>
 		<hr class="divider my-4" />
-        <h2 class="text-white mt-0"> {{ solicitacao_transito.tipo }} </h2>
 	</div>
 <div class="row justify-content-center">
-    <div class="col-lg-5 col-md-6 text-center">
-        <div class="mt-0">
-        	<p class="text-white-50 mb-3">Email: {{ solicitacao_iluminacao.nome.email }}</p>
-            <p class="text-white-50 mb-3">RG: {{ solicitacao_iluminacao.rg }}</p>
-            <div class="row justify-content-center">
-            <p class="text-white-50 mb-3">Link Conta de Luz: {{ solicitacao_iluminacao.conta_luz.url }}</p>
-            </div>
-            <p class="text-white-50 mb-3">Criado em: {{ solicitacao_iluminacao.data_criacao }}</p>
+    <div class="col-lg-3 col-md-6 text-center">
+        <div class="mt-5">
+        	<p class="text-white-50 mb-5">{{ solicitacao_iluminacao.data_criacao }}</p>
     	</div>
-    </div>
-</div>
-<div class="row justify-content-center">
-    <div class="col-lg-8 align-self-baseline">
-        <a class="btn btn-light btn-xl mb-3" href="{% url 'enviar_email_iluminacao' pk=solicitacao_iluminacao.pk %}">Enviar</a>  
-        <a class="btn btn-light btn-xl mb-3" href="{% url 'editar_solicitacao_iluminacao' pk=solicitacao_iluminacao.pk %}">Editar</a>
     </div>
 </div>
 {% endblock %}

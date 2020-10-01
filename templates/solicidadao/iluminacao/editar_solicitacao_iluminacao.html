@@ -2,8 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-   <h2 class="text-white mt-0">Nova Solicitação</h2>
+   <h2>Nova Solicitação</h2>
     <form method="POST" enctype="multipart/form-data">
-	    {% crispy form %}
+	    {% csrf_token %}
+	    {{ form|crispy }}
+	    <input type = "submit" value = "Enviar" />
 	</form>
 {% endblock %}

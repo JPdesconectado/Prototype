@@ -13,98 +13,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 from .local_settings import *
-from django.contrib.messages import constants as messages
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-
-        'console': {
-            'format': '{name}({levelname}) {message}',
-            'style': '{',
-        },
-
-        'file': {
-            'format': '{asctime}-{name}({levelname}) {message}',
-            'style': '{',
-        },
-        'file_sql': {
-            'format': '{name}({levelname}) {message}--{sql}({params}) [{duration}]',
-            'style': '{',
-        }
-    },
-
-    'filters': {
-        'require_debug_true': {
-        '()': 'django.utils.log.RequireDebugTrue',
-        }
-    },
-
-    'handlers': {
-
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'console',
-            'filters': ['require_debug_true'],     
-        },
-
-        'debug': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'formatter': 'file',
-            'filename': os.path.join(BASE_DIR, 'requests/logs/debug.log'),
-            'filters': ['require_debug_true'] 
-        },
-
-        'sql': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'formatter': 'file_sql',
-            'filename': os.path.join(BASE_DIR, 'requests/logs/sql.log'),
-            'filters': ['require_debug_true']
-
-        },
-
-        'errors': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'formatter': 'file',
-            'filename': os.path.join(BASE_DIR, 'requests/logs/errors.log'),
-        },
-    },
-
-    'loggers': {
-        '': {
-            'level': 'ERROR',
-            'handlers': ['errors'],
-        },
-
-        'requests': {
-            'level': 'DEBUG' if DEBUG else 'INFO',
-            'handlers': ['console', 'debug']
-        },
-        
-        'django.security.crsf': {
-            'level': 'DEBUG',
-            'handlers': ['console', 'debug'],
-        },
-        'django.db.backends': {
-            'level': 'INFO',
-            'handlers': ['sql']
-        }
-
-    },
-}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-ALLOWED_HOSTS = ['127.0.0.1', '1tech.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -118,11 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
-    'sendforms.apps.SendformsConfig',
     'cpf_field',
     'crispy_forms',
-    'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -172,9 +84,7 @@ DATABASES = {
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': '',
-        'TEST': {
-            'NAME': 'teste',
-        },
+
     }
 }
 
@@ -218,10 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-       os.path.join(BASE_DIR, "static")
-   ]
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 MEDIA_ROOT = (
   os.path.join(BASE_DIR, 'media') #pasta media para abrigar os arquivos dos usuários
@@ -232,15 +141,5 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-
-MESSAGE_TAGS = {
-    messages.DEBUG: 'alert-info',
-    messages.INFO: 'alert-info',
-    messages.SUCCESS: 'alert-success',
-    messages.WARNING: 'alert-warning',
-    messages.ERROR: 'alert-danger',
-}
-
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')

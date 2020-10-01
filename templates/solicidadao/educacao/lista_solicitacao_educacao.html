@@ -9,8 +9,7 @@
 		{% for solicitacao_educacao in solicitacoes_educacao %}
         <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-            	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_educacao' pk=solicitacao_educacao.pk %}">Histórico Escolar</a>
-                <p class="text-white-50 mb-4">{{ solicitacao_educacao.nome.email }}</a>
+            	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_educacao' pk=solicitacao_educacao.pk %}">{{ solicitacao_educacao.nome }}</a>
                 <p class="text-white-50 mb-4">{{ solicitacao_educacao.comentario|linebreaksbr }}</p>
         		</div>
         	</div>
