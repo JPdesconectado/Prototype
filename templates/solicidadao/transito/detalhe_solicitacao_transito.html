@@ -3,14 +3,26 @@
 
 {% block content %}
 	<div class="container">
-		<h2 class="text-white mt-0"> {{ solicitacao_transito.tipo }} </h2>
+        <h2 class="text-white mt-0"> INFORMAÇÕES</h2>
 		<hr class="divider my-4" />
+        <h2 class="text-white mt-0"> {{ solicitacao_transito.tipo }} </h2>
 	</div>
 <div class="row justify-content-center">
-    <div class="col-lg-3 col-md-6 text-center">
-        <div class="mt-5">
-        	<p class="text-white-50 mb-5">{{ solicitacao_transito.comentario|linebreaksbr }}</p>
+    <div class="col-lg-5 col-md-6 text-center">
+        <div class="mt-0">
+        	<p class="text-white-50 mb-3">Email: {{ solicitacao_transito.nome.email }}</p>
+            <p class="text-white-50 mb-3">Rua {{ solicitacao_transito.endereco.rua }}, n° {{ solicitacao_transito.endereco.numero }}, {{solicitacao_transito.endereco.bairro }}</p>
+            <div class="row justify-content-center">
+            <img src="{{ solicitacao_transito.imagem.url }}">
+            </div>
+            <p class="text-white-50 mb-3">Criado em: {{ solicitacao_transito.data_criacao }}</p>
     	</div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-8 align-self-baseline">
+        <a class="btn btn-light btn-xl mb-3" href="{% url 'enviar_email_transito' pk=solicitacao_transito.pk %}">Enviar</a>  
+        <a class="btn btn-light btn-xl mb-3" href="{% url 'editar_solicitacao_transito' pk=solicitacao_transito.pk %}">Editar</a>
     </div>
 </div>
 {% endblock %}

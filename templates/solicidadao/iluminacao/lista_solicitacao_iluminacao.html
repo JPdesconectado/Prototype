@@ -9,8 +9,12 @@
 		{% for solicitacao_iluminacao in solicitacoes_iluminacao %}
         <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
-            	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_iluminacao' pk=solicitacao_iluminacao.pk %}">{{ solicitacao_iluminacao.nome }}</a>
-                <p class="text-white-50 mb-4">{{ solicitacao_iluminacao.comentario|linebreaksbr }}</p>
+            	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_iluminacao' pk=solicitacao_iluminacao.pk %}">Iluminação</a>
+                <p class="text-white-50 mb-3">Email: {{ solicitacao_iluminacao.nome.email }}</p>
+                {% if solicitacao_iluminacao.comentario %}
+                <p class="text-white-50 mb-3">Descrição: {{ solicitacao_iluminacao.comentario|linebreaksbr }}</p>
+                {% else %}
+                {% endif %}
         		</div>
         	</div>
     	{% endfor %}
