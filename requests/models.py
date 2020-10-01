@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.core.validators import FileExtensionValidator
 from users.models import ProfileUser
 from cpf_field.models import CPFField
+from django.core.exceptions import ValidationError
 
 TYPE_CHOICE = [
 ('Defeito No Semáforo', 'Defeito no Semáforo'),
@@ -10,21 +12,17 @@ TYPE_CHOICE = [
 ('Sinalização Irregular', 'Sinalização Irregular'),
 ]
 
-STATUS_ATUAL = [
-('Recebido', 'Recebido'),
-('Em andamento', 'Em andamento'),
-('Recusado', 'Recusado'),
-('Concluído', 'Concluído'),
-]
+def only_int(value): 
+    if value.isdigit()==False:
+        raise ValidationError('Utilize somente números.')
 
 class SolicitacaoTransito(models.Model):
     nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
-    status = models.ForeignKey('requests.Status', on_delete = models.CASCADE, default=1)
     tipo = models.CharField(max_length = 100, choices = TYPE_CHOICE)
     endereco = models.ForeignKey('requests.Endereco', on_delete = models.CASCADE)
     data_criacao = models.DateTimeField(default = timezone.now)
-    imagem = models.ImageField(upload_to = 'imagens/')
-    comentario = models.TextField()
+    imagem = models.ImageField(upload_to = 'imagens/', blank=True)
+    comentario = models.TextField(blank=True, default='')
 
     def __str__(self):
         return self.tipo
@@ -33,36 +31,32 @@ class SolicitacaoTransito(models.Model):
 class SolicitacaoEducacao(models.Model):
     nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
     cadastro_pf = CPFField('CPF')
-    rg = models.CharField(max_length = 15)
+    rg = models.CharField(max_length = 15, validators=[only_int])
     data_criacao = models.DateTimeField(default = timezone.now)
-    comentario = models.TextField()
+    comentario = models.TextField(blank=True, default='')
 
     def __str__(self):
     	return self.nome
 
 class SolicitacaoIluminacao(models.Model):
     nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
-    conta_luz = models.CharField(max_length = 100)
-    rg = models.CharField(max_length = 15)
+    conta_luz = models.FileField(upload_to = 'arquivos/')
+    rg = models.CharField(max_length = 15, validators=[only_int])
     data_criacao = models.DateTimeField(default = timezone.now)
-    comentario = models.TextField()
+    comentario = models.TextField(blank=True, default='')
     
     def __str__(self):
     	return self.nome
     
 class SolicitacaoUPA(models.Model):
     nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
-    rg = models.CharField(max_length = 15)
-    card_sus = models.CharField(max_length = 20)
-    comprovante_residencia = models.CharField(max_length = 50)
+    rg = models.CharField(max_length = 15, validators=[only_int])
+    card_sus = models.CharField(max_length = 20, validators=[only_int])
+    comprovante_residencia = models.FileField(upload_to = 'arquivos/')
     data_criacao = models.DateTimeField(default = timezone.now)
 
     def __str__(self):
         return self.nome
-
-
-class Status(models.Model):
-    atual = models.CharField(max_length = 100, choices = STATUS_ATUAL, default='Recebido')
 
 class Endereco(models.Model):
     bairro = models.CharField(max_length = 100)
