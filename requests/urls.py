@@ -38,5 +38,6 @@ urlpatterns = [
     path('rest/solicitacao_upa/',                          views.rest_lista_solicitacao_upa,            name = 'rest_lista_solicitacao_upa'),
     path('rest/solicitacao_upa/<pk>/',                     views.rest_detalhe_solicitacao_upa,          name = 'rest_detalhe_solicitacao_upa'),
     # Rest User
+    path('rest/login/', 									obtain_auth_token,							name = 'login_token'),
     path('rest/signup/', 								   views.registration_user, 				    name = 'registration_user'),
 ]

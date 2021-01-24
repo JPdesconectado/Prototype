@@ -166,17 +166,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
-        'PORT': '',
-        'TEST': {
-            'NAME': 'teste',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 
 # Password validation
@@ -216,12 +210,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+STATIC_ROOT = '/static/'
 STATIC_URL = '/static/'
 
+
 STATICFILES_DIRS = [
-       os.path.join(BASE_DIR, "static")
-   ]
+    os.path.join(BASE_DIR, "static"),
+]
 
 MEDIA_ROOT = (
   os.path.join(BASE_DIR, 'media') #pasta media para abrigar os arquivos dos usuários

@@ -9,7 +9,7 @@ class ProfileUserCreationForm(UserCreationForm):
     password2 = forms.CharField(label='Confirmar Senha', widget=forms.PasswordInput)
     class Meta:
             model = ProfileUser
-            fields = ('username', 'nome', 'email', 'data_nascimento',)
+            fields = ('username', 'nome', 'email',)
             labels = {
              "nome": "Nome Completo",
             }
@@ -39,7 +39,7 @@ class ProfileUserChangeForm(UserChangeForm):
 
     class Meta:
         model = ProfileUser
-        fields = ('username', 'nome', 'email', 'data_nascimento',)        
+        fields = ('username', 'nome', 'email',)        
 
     def __init__(self, *args, **kwargs):
         super(ProfileUserChangeForm, self).__init__(*args, **kwargs)

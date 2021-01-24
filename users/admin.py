@@ -9,9 +9,5 @@ class ProfileUserAdmin(UserAdmin):
 	add_form = ProfileUserCreationForm
 	form = ProfileUserChangeForm
 	model = ProfileUser
-	list_display = ['email', 'username', 'data_nascimento', ]
-	fieldsets = UserAdmin.fieldsets + (
-		('Campos Customizados', {'fields' : ('data_nascimento', )}),
-		)
-
+	list_display = ['email', 'username',]
 admin.site.register(ProfileUser, ProfileUserAdmin)	
