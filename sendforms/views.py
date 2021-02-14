@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import EnviarEmailTransito, EnviarEmailEducacao, EnviarEmailIluminacao, EnviarEmailUPA
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from requests.models import SolicitacaoTransito, SolicitacaoEducacao, SolicitacaoIluminacao, SolicitacaoUPA
 import logging
 
@@ -12,27 +12,39 @@ logger = logging.getLogger(__name__)
 def enviar_email_transito(request, pk):
     solicitacao_transito = get_object_or_404(SolicitacaoTransito, pk=pk)
     usuario = request.user
-    enviaremail = EnviarEmailTransito.objects.create(email = usuario.email, tipo = solicitacao_transito.tipo, endereco = solicitacao_transito.endereco)
+    enviaremail = EnviarEmailTransito.objects.create(   
+                                                    email = usuario.email, 
+                                                    tipo = solicitacao_transito.tipo, 
+                                                    endereco = solicitacao_transito.endereco, 
+                                                    imagem = solicitacao_transito.imagem
+                                                    )
+
     if not enviaremail.endereco.complemento:
     	logger.info("Sem complemento.")
 
     if not str(solicitacao_transito.imagem):
     	logger.warning("Sem imagem do ocorrido.")
-    send_mail(
-        "Solicitacao " + enviaremail.tipo,
-        "Nome: " + usuario.nome + "\n" +
-        "Email do Solicitante: " + enviaremail.email + "\n" +
-        "Endereço: Rua " + enviaremail.endereco.rua +
-        ", n° " + str(enviaremail.endereco.numero) +
-        ", " + enviaremail.endereco.bairro + 
-        ", complemento: " + enviaremail.endereco.complemento + "\n" +
-        "Descrição: " + solicitacao_transito.comentario + "\n" +
-        "Imagem: " + "\n" +
-        str(solicitacao_transito.imagem),
-        'solicidadao@django.com',
-        ['detracan@pmc.sc.gov.br'],
-        fail_silently = False,
-        )
+
+    email = EmailMessage(
+    		"Solicitacao " + enviaremail.tipo, #título
+
+    		"Nome: " + usuario.nome + "\n" +	#corpo do email (
+        	"Email do Solicitante: " + enviaremail.email + "\n" +
+        	"Endereço: Rua " + enviaremail.endereco.rua +
+        	", n° " + str(enviaremail.endereco.numero) +
+        	", " + enviaremail.endereco.bairro + 
+        	", complemento: " + enviaremail.endereco.complemento + "\n" +
+        	"Descrição: " + solicitacao_transito.comentario + "\n" +
+        	"Imagem: " + "\n", # ) fim do corpo do email
+
+        	'solicidadao@gmail.com', # emissor
+
+        	['jhony.pv@aluno.ifsc.edu.br'] # receptor
+    	)
+
+    email.attach_file('media/' +  str(solicitacao_transito.imagem)) # anexando imagem
+    email.send() # enviando
+
     solicitacao_transito.delete()
     solicitacoes_transito = SolicitacaoTransito.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
     return render(request, 'solicidadao/transito/lista_solicitacao_transito.html', {'solicitacoes_transito' : solicitacoes_transito})
@@ -41,17 +53,27 @@ def enviar_email_transito(request, pk):
 def enviar_email_educacao(request, pk):
     solicitacao_educacao = get_object_or_404(SolicitacaoEducacao, pk=pk)
     usuario = request.user    
-    enviaremail = EnviarEmailEducacao.objects.create(email = usuario.email, cadastro_pf = solicitacao_educacao.cadastro_pf, rg = solicitacao_educacao.rg)
-    send_mail(
+    enviaremail = EnviarEmailEducacao.objects.create(
+                                                    email = usuario.email, 
+                                                    cadastro_pf = solicitacao_educacao.cadastro_pf, 
+                                                    rg = solicitacao_educacao.rg
+                                                    )
+
+    email = EmailMessage(
         "Solicitando Histórico Escolar",
+
         "Nome: " + usuario.nome + "\n" +
         "Email do Solicitante: " + enviaremail.email + "\n" 
         "RG: " + enviaremail.rg + "\n" +
         "CPF: " + enviaremail.cadastro_pf + "\n",
+
         'solicidadao@django.com',
+
         ['educacao@pmc.sc.gov.br'],
+
         fail_silently = False,
-         )
+        )
+
     solicitacao_educacao.delete()
     solicitacoes_educacao = SolicitacaoEducacao.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
     return render(request, 'solicidadao/educacao/detalhe_solicitacao_educacao.html', {'solicitacoes_educacao': solicitacoes_educacao})
@@ -60,18 +82,28 @@ def enviar_email_educacao(request, pk):
 def enviar_email_iluminacao(request, pk):
     solicitacao_iluminacao = get_object_or_404(SolicitacaoIluminacao, pk=pk)
     usuario = request.user
-    enviaremail = EnviarEmailIluminacao.objects.create(email = usuario.email, rg = solicitacao_iluminacao.rg)    
-    send_mail(
+    enviaremail = EnviarEmailIluminacao.objects.create ( 
+                                                       email = usuario.email, 
+                                                       rg = solicitacao_iluminacao.rg, 
+                                                       conta_luz = solicitacao_iluminacao.conta_luz
+                                                       )    
+    email = EmailMessage(
         "Solicitando Iluminação",
+
         "Nome: " + usuario.nome + "\n" +
         "Email do Solicitante: " + enviaremail.email + "\n" 
         "RG: " + enviaremail.rg + "\n" +
-        "Conta de Luz: " + "\n" +
-        str(solicitacao_iluminacao.conta_luz),
+        "Conta de Luz: " + "\n",
+
         'solicidadao@django.com',
+
         ['planejamento@pmc.sc.gov.br'],
         fail_silently = False,
          )
+
+    email.attach_file('arquivos/' +  str(solicitacao_iluminacao.conta_luz))
+    email.send()     
+
     solicitacao_iluminacao.delete()
     solicitacoes_iluminacao = SolicitacaoIluminacao.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
     return render(request, 'solicidadao/iluminacao/lista_solicitacao_iluminacao.html', {'solicitacoes_iluminacao': solicitacoes_iluminacao})
