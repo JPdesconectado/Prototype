@@ -19,7 +19,6 @@ class EnviarEmailIluminacao(models.Model):
     rg = models.CharField(max_length = 15)
     conta_luz = models.FileField(upload_to = 'arquivos/')
 
-class EnviarEmailUPA(models.Model):
+class EnviarEmailMeioAmbiente(models.Model):
     email = models.EmailField(max_length=254)
-    rg = models.CharField(max_length = 15)
-    card_sus = models.CharField(max_length = 20)
+    endereco = models.ForeignKey(Endereco, on_delete = models.CASCADE)

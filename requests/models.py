@@ -48,11 +48,9 @@ class SolicitacaoIluminacao(models.Model):
     def __str__(self):
     	return self.nome
     
-class SolicitacaoUPA(models.Model):
+class SolicitacaoMeioAmbiente(models.Model):
     nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
-    rg = models.CharField(max_length = 15, validators=[only_int])
-    card_sus = models.CharField(max_length = 20, validators=[only_int])
-    comprovante_residencia = models.FileField(upload_to = 'arquivos/')
+    endereco = models.ForeignKey('requests.Endereco', on_delete = models.CASCADE)
     data_criacao = models.DateTimeField(default = timezone.now)
 
     def __str__(self):

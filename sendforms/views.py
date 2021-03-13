@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .models import EnviarEmailTransito, EnviarEmailEducacao, EnviarEmailIluminacao, EnviarEmailUPA
+from .models import EnviarEmailTransito, EnviarEmailEducacao, EnviarEmailIluminacao, EnviarEmailMeioAmbiente
 from django.core.mail import send_mail, EmailMessage
-from requests.models import SolicitacaoTransito, SolicitacaoEducacao, SolicitacaoIluminacao, SolicitacaoUPA
+from requests.models import SolicitacaoTransito, SolicitacaoEducacao, SolicitacaoIluminacao, SolicitacaoMeioAmbiente
 import logging
 
 logger = logging.getLogger(__name__)
@@ -67,16 +67,13 @@ def enviar_email_educacao(request, pk):
         "RG: " + enviaremail.rg + "\n" +
         "CPF: " + enviaremail.cadastro_pf + "\n",
 
-        'solicidadao@django.com',
-
-        ['educacao@pmc.sc.gov.br'],
-
-        fail_silently = False,
+        'solicidadao@gmail.com',
+        ['jhony.pv@aluno.ifsc.edu.br'],
         )
-
+    email.send()
     solicitacao_educacao.delete()
     solicitacoes_educacao = SolicitacaoEducacao.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
-    return render(request, 'solicidadao/educacao/detalhe_solicitacao_educacao.html', {'solicitacoes_educacao': solicitacoes_educacao})
+    return render(request, 'solicidadao/educacao/lista_solicitacao_educacao.html', {'solicitacoes_educacao': solicitacoes_educacao})
 
 @login_required
 def enviar_email_iluminacao(request, pk):
@@ -95,13 +92,12 @@ def enviar_email_iluminacao(request, pk):
         "RG: " + enviaremail.rg + "\n" +
         "Conta de Luz: " + "\n",
 
-        'solicidadao@django.com',
+        'solicidadao@gmail.com',
 
-        ['planejamento@pmc.sc.gov.br'],
-        fail_silently = False,
+        ['jhony.pv@aluno.ifsc.edu.br'],
          )
 
-    email.attach_file('arquivos/' +  str(solicitacao_iluminacao.conta_luz))
+    email.attach_file('media/' +  str(solicitacao_iluminacao.conta_luz))
     email.send()     
 
     solicitacao_iluminacao.delete()
@@ -109,22 +105,28 @@ def enviar_email_iluminacao(request, pk):
     return render(request, 'solicidadao/iluminacao/lista_solicitacao_iluminacao.html', {'solicitacoes_iluminacao': solicitacoes_iluminacao})
 
 @login_required
-def enviar_email_upa(request, pk):
-    solicitacao_upa = get_object_or_404(SolicitacaoUPA, pk=pk)
+def enviar_email_meioambiente(request, pk):
+    solicitacao_meioambiente = get_object_or_404(SolicitacaoMeioAmbiente, pk=pk)
     usuario = request.user
-    enviaremail = EnviarEmailUPA.objects.create(email = usuario.email, rg = solicitacao_upa.rg, card_sus = solicitacao_upa.card_sus)    
-    send_mail(
-        "Solicitando Atendimento",
-        "Nome: " + usuario.nome + "\n" +
-        "Email do Solicitante: " + enviaremail.email + "\n" 
-        "RG: " + enviaremail.rg + "\n" +
-        "N° Cartão SUS: " + enviaremail.card_sus + "\n" +
-        "Comprovante de Residência: " + "\n" +
-        str(solicitacao_upa.comprovante_residencia),
-        'solicidadao@django.com',
-        ['saude@pmc.sc.gov.br'],
-        fail_silently = False,
-         )
-    solicitacao_upa.delete()
-    solicitacoes_upa = SolicitacaoUPA.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
-    return render(request, 'solicidadao/upa/lista_solicitacao_upa.html', {'solicitacoes_upa': solicitacoes_upa})
+    enviaremail = EnviarEmailMeioAmbiente.objects.create(email = usuario.email, endereco = solicitacao_meioambiente.endereco) 
+    if not enviaremail.endereco.complemento:
+        logger.info("Sem complemento.")   
+    email = EmailMessage(
+    		"Solicitando Remoção de Resíduos Vegetais",
+    		
+            "Nome: " + usuario.nome + "\n" +    #corpo do email (
+            "Email do Solicitante: " + enviaremail.email + "\n" +
+            "Endereço: Rua " + enviaremail.endereco.rua +
+            ", n° " + str(enviaremail.endereco.numero) +
+            ", " + enviaremail.endereco.bairro + 
+            ", complemento: " + enviaremail.endereco.complemento + "\n",
+
+            'solicidadao@gmail.com', # emissor
+
+            ['jhony.pv@aluno.ifsc.edu.br'] # receptor
+        )
+
+    email.send() 
+    solicitacao_meioambiente.delete()
+    solicitacoes_meioambiente = SolicitacaoMeioAmbiente.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
+    return render(request, 'solicidadao/meioambiente/lista_solicitacao_meioambiente.html', {'solicitacoes_meioambiente': solicitacoes_meioambiente})

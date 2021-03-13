@@ -1,0 +1,25 @@
+{% extends 'solicidadao/base_meioambiente.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container">
+        <h2 class="text-white mt-0"> INFORMAÇÕES</h2>
+		<hr class="dividerlogin my-4" />
+        <h2 class="text-white mt-0">Confira os Dados Abaixo.</h2>
+	</div>
+<div class="row justify-content-center">
+    <div class="col-lg-5 col-md-6 text-center">
+        <div class="mt-0">
+        	<p class="text-white-50 mb-3">Email: {{ solicitacao_meioambiente.nome.email }}</p>
+            <p class="text-white-50 mb-3">Rua {{ solicitacao_meioambiente.endereco.rua }}, n° {{ solicitacao_meioambiente.endereco.numero }}, {{solicitacao_meioambiente.endereco.bairro }}</p>
+            <p class="text-white-50 mb-3">Criado em: {{ solicitacao_meioambiente.data_criacao }}</p>
+    	</div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-8 align-self-baseline">
+        <a class="btn btn-light btn-xl mb-3" href="{% url 'enviar_email_meioambiente' pk=solicitacao_meioambiente.pk %}">Enviar</a>  
+        <a class="btn btn-light btn-xl mb-3" href="{% url 'editar_solicitacao_meioambiente' pk=solicitacao_meioambiente.pk %}">Editar</a>
+    </div>
+</div>
+{% endblock %}

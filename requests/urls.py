@@ -20,11 +20,11 @@ urlpatterns = [
     path('solicitacao_iluminacao/<int:pk>/',			   views.detalhe_solicitacao_iluminacao,		name = 'detalhe_solicitacao_iluminacao'),
     path('solicitacao_iluminacao/<int:pk>/editar/',        views.editar_solicitacao_iluminacao,         name = 'editar_solicitacao_iluminacao'),
     path('solicitacao_iluminacao/nova/', 				   views.nova_solicitacao_iluminacao, 			name = 'nova_solicitacao_iluminacao'),
-    # UPA
-    path('solicitacao_upa/',                               views.lista_solicitacao_upa,                 name = 'lista_solicitacao_upa'),
-    path('solicitacao_upa/<int:pk>/',                      views.detalhe_solicitacao_upa,               name = 'detalhe_solicitacao_upa'),
-    path('solicitacao_upa/<int:pk>/editar/',               views.editar_solicitacao_upa,                name = 'editar_solicitacao_upa'),
-    path('solicitacao_upa/nova/',                          views.nova_solicitacao_upa,                  name = 'nova_solicitacao_upa'),
+    # meioambiente
+    path('solicitacao_meioambiente/',                      views.lista_solicitacao_meioambiente,        name = 'lista_solicitacao_meioambiente'),
+    path('solicitacao_meioambiente/<int:pk>/',             views.detalhe_solicitacao_meioambiente,      name = 'detalhe_solicitacao_meioambiente'),
+    path('solicitacao_meioambiente/<int:pk>/editar/',      views.editar_solicitacao_meioambiente,       name = 'editar_solicitacao_meioambiente'),
+    path('solicitacao_meioambiente/nova/',                 views.nova_solicitacao_meioambiente,         name = 'nova_solicitacao_meioambiente'),
     # Rest Transito
     path('rest/solicitacao_transito/',                     views.rest_lista_solicitacao_transito,       name = 'rest_lista_solicitacao_transito'),
     path('rest/solicitacao_transito/<pk>/',                views.rest_detalhe_solicitacao_transito,     name = 'rest_detalhe_solicitacao_transito'),
@@ -34,10 +34,10 @@ urlpatterns = [
     # Rest Iluminação
     path('rest/solicitacao_iluminacao/',                   views.rest_lista_solicitacao_iluminacao,     name = 'rest_lista_solicitacao_iluminacao'),
     path('rest/solicitacao_iluminacao/<pk>/',              views.rest_detalhe_solicitacao_iluminacao,   name = 'rest_detalhe_solicitacao_iluminacao'),
-    # Rest UPA
-    path('rest/solicitacao_upa/',                          views.rest_lista_solicitacao_upa,            name = 'rest_lista_solicitacao_upa'),
-    path('rest/solicitacao_upa/<pk>/',                     views.rest_detalhe_solicitacao_upa,          name = 'rest_detalhe_solicitacao_upa'),
+    # Rest meioambiente
+    path('rest/solicitacao_meioambiente/',                 views.rest_lista_solicitacao_meioambiente,   name = 'rest_lista_solicitacao_meioambiente'),
+    path('rest/solicitacao_meioambiente/<pk>/',            views.rest_detalhe_solicitacao_meioambiente, name = 'rest_detalhe_solicitacao_meioambiente'),
     # Rest User
-    path('rest/login/', 									obtain_auth_token,							name = 'login_token'),
+    path('rest/login/', 								    obtain_auth_token,							name = 'login_token'),
     path('rest/signup/', 								   views.registration_user, 				    name = 'registration_user'),
 ]

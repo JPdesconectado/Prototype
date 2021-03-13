@@ -1,5 +1,5 @@
 from django import forms
-from .models import SolicitacaoTransito, SolicitacaoEducacao, SolicitacaoIluminacao, SolicitacaoUPA
+from .models import SolicitacaoTransito, SolicitacaoEducacao, SolicitacaoIluminacao, SolicitacaoMeioAmbiente
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column, Reset, Field
 from crispy_forms.bootstrap import PrependedText
@@ -101,25 +101,31 @@ class FormularioSolicitacaoIluminacao(forms.ModelForm):
         )
         self.helper.add_input(Submit('submit', 'Salvar', css_class='btn btn-light btn-xl'))
 
-class FormularioSolicitacaoUPA(forms.ModelForm):
+class FormularioSolicitacaoMeioAmbiente(forms.ModelForm):
 
+    bairro = forms.ChoiceField(choices = BAIRROS)
+    rua = forms.CharField(max_length = 200)
+    numero = forms.IntegerField()
+    complemento = forms.CharField(max_length = 200, required = False)
+    
     class Meta:
-        model = SolicitacaoUPA
-        fields = ('rg', 'card_sus', 'comprovante_residencia')
+        model = SolicitacaoMeioAmbiente
+        fields = ('bairro', 'rua', 'numero', 'complemento')
         labels = {
-        "rg": "RG",
-        "card_sus": "Números do Cartão SUS",
-        "comprovante_residencia": "Anexar Comprovante de Residência",
+        "numero": "Número",
         }
 
     def __init__(self, *args, **kwargs):
-        super(FormularioSolicitacaoUPA, self).__init__(*args, **kwargs)
+        super(FormularioSolicitacaoMeioAmbiente, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.attrs = {'novalidate': ''}
         self.helper.layout = Layout(
-            Row(Column('rg', css_class='text-white-75 font-weight-light mb-5')),
-            Row(Column('card_sus', css_class='text-white-75 font-weight-light mb-5')),
-            Row(Column('comprovante_residencia', css_class='text-white-75 font-weight-light mb-5')),
+            Row(
+                Column('bairro', css_class='text-white-75 font-weight-light mb-5'),
+                Column('rua', css_class='text-white-75 font-weight-light mb-5'),
+                Column('numero', css_class='text-white-75 font-weight-light mb-5'),
+                Column('complemento', css_class='text-white-75 font-weight-light mb-5'),
+                                    ),
         )
         self.helper.add_input(Submit('submit', 'Salvar', css_class='btn btn-light btn-xl'))

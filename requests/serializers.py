@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SolicitacaoTransito, SolicitacaoEducacao, SolicitacaoIluminacao, SolicitacaoUPA, Endereco
+from .models import SolicitacaoTransito, SolicitacaoEducacao, SolicitacaoIluminacao, SolicitacaoMeioAmbiente, Endereco
 from users.models import ProfileUser
 
 class TransitoSerializer(serializers.ModelSerializer):
@@ -17,10 +17,10 @@ class IluminacaoSerializer(serializers.ModelSerializer):
 		model = SolicitacaoIluminacao
 		fields = ['pk', 'nome', 'conta_luz', 'rg', 'data_criacao', 'comentario',]
 
-class UPASerializer(serializers.ModelSerializer):
+class MeioAmbienteSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = SolicitacaoUPA
-		fields = ['pk', 'nome', 'rg', 'card_sus', 'comprovante_residencia', 'data_criacao',]
+		model = SolicitacaoMeioAmbiente
+		fields = ['pk', 'nome', 'endereco',]
 		
 class EnderecoSerializer(serializers.ModelSerializer):
 	class Meta:
