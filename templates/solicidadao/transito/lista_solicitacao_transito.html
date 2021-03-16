@@ -2,7 +2,7 @@
 {% block content %}
 	<div class="container">
 		<h2 class="text-uppercase text-white font-weight-bold"> Solicitações </h2>
-		<hr class="divider my-4" />
+		<hr class="dividerlogin my-4" />
 	</div>
 	<div class="container">
 		 <div class="row justify-content-center">
@@ -10,7 +10,6 @@
         <div class="col-lg-5 col-md-6 text-center">
             <div class="mt-5">
             	<a class="text-uppercase text-white font-weight-bold" href="{% url 'detalhe_solicitacao_transito' pk=solicitacao_transito.pk %}">{{ solicitacao_transito.tipo }}</a>
-                <p class="text-white-50 mb-3">Email: {{ solicitacao_transito.nome.email }}</p>
                 <p class="text-white-50 mb-4">Rua {{ solicitacao_transito.endereco.rua }}, n° {{ solicitacao_transito.endereco.numero }}, {{solicitacao_transito.endereco.bairro }}</p>
         	</div>
         	</div>

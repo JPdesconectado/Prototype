@@ -5,22 +5,22 @@ from users.models import ProfileUser
 class TransitoSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SolicitacaoTransito
-		fields = ['pk', 'nome', 'tipo', 'endereco', 'data_criacao', 'comentario', 'imagem', ]
+		fields = ['pk', 'nome', 'email', 'tipo', 'endereco', 'data_criacao', 'comentario', 'imagem', ]
 
 class EducacaoSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SolicitacaoEducacao		
-		fields = ['pk', 'nome', 'cadastro_pf', 'rg', 'data_criacao', 'comentario',]
+		fields = ['pk', 'nome', 'email', 'cadastro_pf', 'rg', 'escola', 'data_criacao', 'comentario',]
 
 class IluminacaoSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SolicitacaoIluminacao
-		fields = ['pk', 'nome', 'conta_luz', 'rg', 'data_criacao', 'comentario',]
+		fields = ['pk', 'nome', 'email', 'conta_luz', 'rg', 'data_criacao', 'comentario',]
 
 class MeioAmbienteSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SolicitacaoMeioAmbiente
-		fields = ['pk', 'nome', 'endereco',]
+		fields = ['pk', 'nome', 'email', 'endereco',]
 		
 class EnderecoSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -32,18 +32,17 @@ class RegistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ProfileUser
-        fields = ['username', 'nome', 'email', 'data_nascimento', 'password', 'password2']
+        fields = ['email', 'nome', 'password', 'password2']
         extra_kwargs = {
                 'password': {'write_only': True}
         }
    
     def save(self):
         user = ProfileUser(
-                username = self.validated_data['username'],
-                nome = self.validated_data['nome'],
-                email = self.validated_data['email'],
-                data_nascimento = self.validated_data['data_nascimento'],
+            email = self.validated_data['email'],
+            nome = self.validated_data['nome'],
         )
+
         password = self.validated_data['password']
         password2 = self.validated_data['password2']
         

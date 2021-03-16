@@ -17,11 +17,11 @@ def only_int(value):
         raise ValidationError('Utilize somente números.')
 
 class SolicitacaoTransito(models.Model):
-    nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
+    email = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
     tipo = models.CharField(max_length = 100, choices = TYPE_CHOICE)
     endereco = models.ForeignKey('requests.Endereco', on_delete = models.CASCADE)
     data_criacao = models.DateTimeField(default = timezone.now)
-    imagem = models.ImageField(upload_to = 'imagens/', blank=True)
+    imagem = models.ImageField(upload_to = 'imagens/')
     comentario = models.TextField(blank=True, default='')
 
     def __str__(self):
@@ -29,32 +29,32 @@ class SolicitacaoTransito(models.Model):
 
 
 class SolicitacaoEducacao(models.Model):
-    nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
+    email = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
     cadastro_pf = CPFField('CPF')
     rg = models.CharField(max_length = 15, validators=[only_int])
     data_criacao = models.DateTimeField(default = timezone.now)
-    comentario = models.TextField(blank=True, default='')
+    escola = models.CharField(max_length = 100)
 
     def __str__(self):
-    	return self.nome
+    	return self.email
 
 class SolicitacaoIluminacao(models.Model):
-    nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
+    email = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
     conta_luz = models.FileField(upload_to = 'arquivos/')
     rg = models.CharField(max_length = 15, validators=[only_int])
     data_criacao = models.DateTimeField(default = timezone.now)
-    comentario = models.TextField(blank=True, default='')
+    comentario = models.CharField(max_length = 100)
     
     def __str__(self):
-    	return self.nome
+    	return self.email
     
 class SolicitacaoMeioAmbiente(models.Model):
-    nome = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
+    email = models.ForeignKey(ProfileUser, on_delete = models.CASCADE)
     endereco = models.ForeignKey('requests.Endereco', on_delete = models.CASCADE)
     data_criacao = models.DateTimeField(default = timezone.now)
 
     def __str__(self):
-        return self.nome
+        return self.email
 
 class Endereco(models.Model):
     bairro = models.CharField(max_length = 100)

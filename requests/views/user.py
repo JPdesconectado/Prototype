@@ -12,10 +12,8 @@ def registration_user(request):
         if serializer.is_valid():
             user = serializer.save()
             data['response'] = "Usuário registrado com sucesso."
-            data['username'] = user.username
-            data['nome'] = user.nome
             data['email'] = user.email
-            data['data_nascimento'] = user.data_nascimento
+            data['nome'] = user.nome
             token = Token.objects.get(user=user).key
             data['token'] = token
         else:

@@ -18,7 +18,7 @@ def lista_solicitacao_educacao(request):
     if request.user.is_superuser:
         solicitacoes_educacao = SolicitacaoEducacao.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
     else:
-        solicitacoes_educacao = SolicitacaoEducacao.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
+        solicitacoes_educacao = SolicitacaoEducacao.objects.filter(email_id = request.user.id, data_criacao__lte = timezone.now()).order_by('data_criacao')
     return render(request, 'solicidadao/educacao/lista_solicitacao_educacao.html', {'solicitacoes_educacao' : solicitacoes_educacao})
 
 @login_required
@@ -32,9 +32,9 @@ def nova_solicitacao_educacao(request):
         form = FormularioSolicitacaoEducacao(request.POST)
         if form.is_valid():
             solicitacao_educacao = form.save(commit = False)
-            solicitacao_educacao.nome = request.user
+            solicitacao_educacao.email = request.user
             solicitacao_educacao.save()
-            messages.success(request, 'Solicitação Enviada com Sucesso!')
+            messages.success(request, 'Solicitação Criada com Sucesso!')
             return redirect('detalhe_solicitacao_educacao', pk = solicitacao_educacao.pk)
         else:
             logging.error("Erro no Formulário.")
@@ -50,9 +50,9 @@ def editar_solicitacao_educacao(request, pk):
         form = FormularioSolicitacaoEducacao(request.POST, instance=solicitacao_educacao)
         if form.is_valid():
             solicitacao_educacao = form.save(commit = False)
-            solicitacao_educacao.nome = request.user
+            solicitacao_educacao.email = request.user
             solicitacao_educacao.save()
-            messages.success(request, 'Solicitação Enviada com Sucesso!')
+            messages.success(request, 'Solicitação Editada com Sucesso!')
             return redirect('detalhe_solicitacao_educacao', pk = solicitacao_educacao.pk)
         else:
             logging.error("Erro no Formulário.")

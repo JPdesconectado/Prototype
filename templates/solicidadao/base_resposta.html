@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="pt">
     <head>
@@ -8,7 +9,6 @@
         <meta name="author" content="Jhony Pereira do Vale" />
         <title>SoliCidadão</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -20,8 +20,6 @@
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     </head>
     <body id="page-top">
-
-
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container">
@@ -44,55 +42,23 @@
                 </div>
             </div>
         </nav>
-
         <!-- Masthead-->
         <header class="masthead">
             <div class="container h-100">
                 <div class="row h-100 align-items-center justify-content-center text-center">
                     <div class="col-lg-10 align-self-end">
-                        <h1 class="text-uppercase text-white font-weight-bold">Secretária Municipal de Educação - SME</h1>
+                        <h1 class="text-uppercase text-white font-weight-bold">Respostas das Solicitações</h1>
                         <hr class="divider my-4" />
                     </div>
                     <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 font-weight-light mb-5">Solicite a emissão do seu Histórico Escolar.</p>
-                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="#services">Documentos Necessários</a>
+                        <p class="text-white-75 font-weight-light mb-5">Aqui fica reunido as respostas dos departamento para os pedidos feitos por você!</p>
+                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Visualizar</a>
                     </div>
                 </div>
             </div>
         </header>
 
-            <!-- Services-->
-        <section class="page-section" id="services">
-            <div class="container">
-                <h2 class="text-center mt-0">Informações Necessárias</h2>
-                <hr class="divider my-4" />
-                <div class="row">
-                    <div class="col-lg-4 col-md-5 text-center">
-                        <div class="mt-5">
-                            <i class="fas fa-4x fa-id-card text-primary mb-4"></i>
-                            <h3 class="h4 mb-2">CPF</h3>
-                            <p class="text-muted mb-0">Os 11 números do seu CPF.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-5 text-center">
-                        <div class="mt-5">
-                            <i class="fas fa-4x fa-id-card-alt text-primary mb-4"></i>
-                            <h3 class="h4 mb-2">RG</h3>
-                            <p class="text-muted mb-0">Os números do seu RG.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-5 text-center">
-                        <div class="mt-5">
-                            <i class="fas fa-4x fa-comment text-primary mb-4"></i>
-                            <h3 class="h4 mb-2">Comentário</h3>
-                            <p class="text-muted mb-0">A escola que você deseja pegar o certificado.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About-->
+ <!-- About-->
         <section class="page-section bg-primary" id="about">
             <div class="container">
                 <div class="row justify-content-center">
@@ -104,37 +70,52 @@
                 </div>
             </div>
         </section>
-
-                <!-- Contact-->
-        <section class="page-section bg-dark text-white" id="contact">
-            <div class="container">
+       
+        <!-- Contact-->
+        <section class="page-section" id="listalinks">
+            <div class="row h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-10 align-self-end"> 
+                    <h1 class="text-uppercase text-black font-weight-bold">Apoio</h1>
+                    <hr class="divider my-4" />
+                    <a href="https://www.ifsc.edu.br/"><img src="{% static 'imagens/ifsc.png' %}" width="300" height="80"></a>
+                    </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="page-section bg-dark text-white">
+        	 <div class="container">
+                 
                 <div class="row justify-content-center">
-                    <div class="col-lg-8 text-center">
-                        <h2 class="mt-0">Entre em Contato</h2>
+                    <div class="col-lg-10 text-center">
+                        <b class="mt-4">Instituto Federal de Educação, Ciência e Tecnologia de Santa Catarina - IFSC</b>
+                        <br>
+                        <br>
+                        <img src="{% static 'imagens/selo10anos.png' %}"/>
                         <hr class="divider my-4" />
-                        <p class="text-muted mb-3">Horários de atendimento: Das 8 às 12 horas e das 13h30 às 15h30.</p>
-                        <p class="text-muted mb-5">Endereço: Rua 3 de maio, 142 , Centro, CEP 89460-058</p>
+                        <p class="small">Encontrou algum problema? Nos ligue ou mande um email que resolveremos o mais rápido possível.</p>
+                        <p class="small">Avenida Expedicionários, 2150 - Campo da Água Verde, CEP: 89466-312, Canoinhas-SC</p>
+                        <p class="small">CNPJ 11.402.887/0001-60</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-                        <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-                        <div>(47) 3621-7710</div>
-                        
+                        <i class="fas fa-phone fa-3x mb-3"></i>
+                        <div>(47) 3627-4500</div>
                     </div>
                     <div class="col-lg-4 mr-auto text-center">
-                        <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-                        <a class="d-block" href="mailto:info.educ@pmc.sc.gov.br">info.educ@pmc.sc.gov.br</a>
-                       
+                        <i class="fas fa-envelope fa-3x mb-3"></i>
+                        <a class="d-block" href="mailto:secretaria.can@ifsc.edu.br">secretaria.can@ifsc.edu.br</a>
                     </div>
-                </div>
+                </div>  
             </div>
-        </section>
-        <!-- Footer-->
-        <footer class="bg-light py-5">
-            <div class="container"><div class="small text-center text-muted">Copyright © 2021 - SoliCidadão</div></div>
+            <br>
+            <br>
+            <div class="container"></div><div class="small text-center">Copyright © 2021 - FrostFall Studio</div></div>
+            <div class="container"></div><div class="small text-center">Todos os Direitos Reservados.</div></div>
+
         </footer>
     </body>
+
              <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>

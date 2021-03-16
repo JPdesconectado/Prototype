@@ -14,7 +14,10 @@ logger = logging.getLogger(__name__)
 
 @login_required
 def lista_solicitacao_meioambiente(request):
-    solicitacoes_meioambiente = SolicitacaoMeioAmbiente.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
+    if request.user.is_superuser:
+        solicitacoes_meioambiente = SolicitacaoMeioAmbiente.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
+    else:
+        solicitacoes_meioambiente = SolicitacaoMeioAmbiente.objects.filter(email_id = request.user.id, data_criacao__lte = timezone.now()).order_by('data_criacao')
     return render(request, 'solicidadao/meioambiente/lista_solicitacao_meioambiente.html', {'solicitacoes_meioambiente': solicitacoes_meioambiente})
 
 @login_required
@@ -28,12 +31,12 @@ def nova_solicitacao_meioambiente(request):
         form = FormularioSolicitacaoMeioAmbiente(request.POST)
         if form.is_valid():
             solicitacao_meioambiente = form.save(commit = False)
-            solicitacao_meioambiente.nome = request.user
+            solicitacao_meioambiente.email = request.user
             endereco = Endereco.objects.create(bairro = form.cleaned_data['bairro'], rua = form.cleaned_data['rua'], numero = form.cleaned_data['numero'], complemento = form.cleaned_data['complemento'])
             endereco.save()
             solicitacao_meioambiente.endereco = endereco
             solicitacao_meioambiente.save()
-            messages.success(request, 'Solicitação Enviada com Sucesso!')
+            messages.success(request, 'Solicitação Criada com Sucesso!')
             return redirect('detalhe_solicitacao_meioambiente', pk = solicitacao_meioambiente.pk)
         else:
             logging.error("Erro no Formulário.")
@@ -49,12 +52,12 @@ def editar_solicitacao_meioambiente(request, pk):
         form = FormularioSolicitacaoMeioAmbiente(request.POST, instance=solicitacao_meioambiente)
         if form.is_valid():
             solicitacao_meioambiente = form.save(commit = False)
-            solicitacao_meioambiente.nome = request.user
+            solicitacao_meioambiente.email = request.user
             endereco = Endereco.objects.create(bairro = form.cleaned_data['bairro'], rua = form.cleaned_data['rua'], numero = form.cleaned_data['numero'], complemento = form.cleaned_data['complemento'])
             endereco.save()
             solicitacao_meioambiente.endereco = endereco
             solicitacao_meioambiente.save()
-            messages.success(request, 'Solicitação Enviada com Sucesso!')
+            messages.success(request, 'Solicitação Editada com Sucesso!')
             return redirect('detalhe_solicitacao_meioambiente', pk = solicitacao_meioambiente.pk)
         else:
             logging.error("Erro no Formulário.")
@@ -80,7 +83,7 @@ def rest_lista_solicitacao_meioambiente(request):
 def rest_detalhe_solicitacao_meioambiente(request, pk):
     try:
         solicitacao_meioambiente = SolicitacaoMeioAmbiente.objects.get(pk=pk)
-    except Solicitacaomeioambiente.DoesNotExist:
+    except SolicitacaoMeioAmbiente.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':

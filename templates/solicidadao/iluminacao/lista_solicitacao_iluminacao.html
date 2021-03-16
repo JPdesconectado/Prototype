@@ -2,7 +2,7 @@
 {% block content %}
 	<div class="container">
 		<h2 class="text-uppercase text-white font-weight-bold"> Solicitações </h2>
-		<hr class="divider my-4" />
+		<hr class="dividerlogin my-4" />
 	</div>
 	<div class="container">
 		 <div class="row justify-content-center">
@@ -10,7 +10,6 @@
         <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
             	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_iluminacao' pk=solicitacao_iluminacao.pk %}">Iluminação</a>
-                <p class="text-white-50 mb-3">Email: {{ solicitacao_iluminacao.nome.email }}</p>
                 {% if solicitacao_iluminacao.comentario %}
                 <p class="text-white-50 mb-3">Descrição: {{ solicitacao_iluminacao.comentario|linebreaksbr }}</p>
                 {% else %}

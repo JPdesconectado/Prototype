@@ -2,7 +2,7 @@
 {% block content %}
 	<div class="container">
 		<h2 class="text-uppercase text-white font-weight-bold"> Solicitações </h2>
-		<hr class="divider my-4" />
+		<hr class="dividerlogin my-4" />
 	</div>
 	<div class="container">
 		 <div class="row justify-content-center">
@@ -10,8 +10,7 @@
         <div class="col-lg-3 col-md-6 text-center">
             <div class="mt-5">
             	<a class="text-white font-weight-bold" href="{% url 'detalhe_solicitacao_educacao' pk=solicitacao_educacao.pk %}">Histórico Escolar</a>
-                <p class="text-white-50 mb-4">{{ solicitacao_educacao.nome.email }}</a>
-                <p class="text-white-50 mb-4">{{ solicitacao_educacao.comentario|linebreaksbr }}</p>
+                <p class="text-white-50 mb-4">{{ solicitacao_educacao.escola|linebreaksbr }}</p>
         		</div>
         	</div>
     	{% endfor %}

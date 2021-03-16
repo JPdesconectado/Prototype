@@ -16,7 +16,10 @@ def inicio(request):
 
 @login_required
 def lista_solicitacao_transito(request):
-    solicitacoes_transito = SolicitacaoTransito.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
+    if request.user.is_superuser:
+        solicitacoes_transito = SolicitacaoTransito.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
+    else:
+        solicitacoes_transito = SolicitacaoTransito.objects.filter(email_id = request.user.id, data_criacao__lte = timezone.now()).order_by('data_criacao')
     return render(request, 'solicidadao/transito/lista_solicitacao_transito.html', {'solicitacoes_transito' : solicitacoes_transito})
 
 @login_required
@@ -30,7 +33,7 @@ def nova_solicitacao_transito(request):
         form = FormularioSolicitacaoTransito(request.POST, request.FILES)
         if form.is_valid():
             solicitacao_transito = form.save(commit = False)
-            solicitacao_transito.nome = request.user
+            solicitacao_transito.email = request.user
             endereco = Endereco.objects.create(bairro = form.cleaned_data['bairro'], rua = form.cleaned_data['rua'], numero = form.cleaned_data['numero'], complemento = form.cleaned_data['complemento'])
             endereco.save()
             solicitacao_transito.endereco = endereco
@@ -39,7 +42,7 @@ def nova_solicitacao_transito(request):
                 messages.error(request, "Por favor, use o formato PNG ou JPG.")
                 return redirect("nova_solicitacao_transito")
             solicitacao_transito.save()
-            messages.success(request, 'Solicitação Enviada com Sucesso!')
+            messages.success(request, 'Solicitação Criada com Sucesso!')
             return redirect('detalhe_solicitacao_transito', pk = solicitacao_transito.pk)
         else:
             logging.error("Erro no Formulário.")
@@ -55,7 +58,7 @@ def editar_solicitacao_transito(request, pk):
         form = FormularioSolicitacaoTransito(request.POST, request.FILES, instance=solicitacao_transito)
         if form.is_valid():
             solicitacao_transito = form.save(commit = False)
-            solicitacao_transito.nome = request.user
+            solicitacao_transito.email = request.user
             endereco = Endereco.objects.create(bairro = form.cleaned_data['bairro'], rua = form.cleaned_data['rua'], numero = form.cleaned_data['numero'], complemento = form.cleaned_data['complemento'])
             endereco.save()
             solicitacao_transito.endereco = endereco
@@ -64,7 +67,7 @@ def editar_solicitacao_transito(request, pk):
                 messages.error(request, "Por favor, use o formato PNG ou JPG.")
                 return redirect("nova_solicitacao_transito")
             solicitacao_transito.save()
-            messages.success(request, 'Solicitação Enviada com Sucesso!')
+            messages.success(request, 'Solicitação Editada com Sucesso!')
             return redirect('detalhe_solicitacao_transito', pk = solicitacao_transito.pk)
         else:
             logging.error("Erro no Formulário.")

@@ -10,9 +10,10 @@
 <div class="row justify-content-center">
     <div class="col-lg-5 col-md-6 text-center">
         <div class="mt-0">
-        	<p class="text-white-50 mb-3">Email: {{ solicitacao_educacao.nome.email }}</p>
+        	<p class="text-white-50 mb-3">Email: {{ solicitacao_educacao.email }}</p>
         	<p class="text-white-50 mb-3">CPF: {{ solicitacao_educacao.cadastro_pf }}</p>
         	<p class="text-white-50 mb-3">RG: {{ solicitacao_educacao.rg }}</p>
+            <p class="text-white-50 mb-4">Colégio: {{ solicitacao_educacao.escola|linebreaksbr }}</p>
         	<p class="text-white-50 mb-3">Criado em: {{ solicitacao_educacao.data_criacao }}</p>
     	</div>
     </div>

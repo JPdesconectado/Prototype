@@ -119,6 +119,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'requests.apps.RequestsConfig',
     'sendforms.apps.SendformsConfig',
+    'getemail.apps.GetemailConfig',
     'cpf_field',
     'crispy_forms',
     'rest_framework',

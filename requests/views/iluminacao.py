@@ -14,7 +14,10 @@ logger = logging.getLogger(__name__)
 
 @login_required
 def lista_solicitacao_iluminacao(request):
-    solicitacoes_iluminacao = SolicitacaoIluminacao.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
+    if request.user.is_superuser:
+        solicitacoes_iluminacao = SolicitacaoIluminacao.objects.filter(data_criacao__lte = timezone.now()).order_by('data_criacao')
+    else:
+        solicitacoes_iluminacao = SolicitacaoIluminacao.objects.filter(email_id  = request.user.id, data_criacao__lte = timezone.now()).order_by('data_criacao')
     return render(request, 'solicidadao/iluminacao/lista_solicitacao_iluminacao.html', {'solicitacoes_iluminacao': solicitacoes_iluminacao})
     
 @login_required
@@ -28,13 +31,13 @@ def nova_solicitacao_iluminacao(request):
         form = FormularioSolicitacaoIluminacao(request.POST, request.FILES)
         if form.is_valid():
             solicitacao_iluminacao = form.save(commit = False)
-            solicitacao_iluminacao.nome = request.user
+            solicitacao_iluminacao.email = request.user
             if ".pdf" not in solicitacao_iluminacao.conta_luz.name:
                 logging.error("Formato não aceito. (.png)")
                 messages.error(request, "Por favor, use o formato PDF.")
                 return redirect("nova_solicitacao_iluminacao")
             solicitacao_iluminacao.save()
-            messages.success(request, 'Solicitação Enviada com Sucesso!')
+            messages.success(request, 'Solicitação Criada com Sucesso!')
             return redirect('detalhe_solicitacao_iluminacao', pk = solicitacao_iluminacao.pk)
         else:
             logging.error("Erro no Formulário.")
@@ -50,13 +53,13 @@ def editar_solicitacao_iluminacao(request, pk):
         form = FormularioSolicitacaoIluminacao(request.POST, request.FILES, instance=solicitacao_iluminacao)
         if form.is_valid():
             solicitacao_iluminacao = form.save(commit = False)
-            solicitacao_iluminacao.nome = request.user
+            solicitacao_iluminacao.email = request.user
             if ".pdf" not in solicitacao_iluminacao.conta_luz.name:
                 logging.error("Formato não aceito. (.png)")
                 messages.error(request, "Por favor, use o formato PDF.")
                 return redirect("nova_solicitacao_iluminacao")
             solicitacao_iluminacao.save()
-            messages.success(request, 'Solicitação Enviada com Sucesso!')
+            messages.success(request, 'Solicitação Editada com Sucesso!')
             return redirect('detalhe_solicitacao_iluminacao', pk = solicitacao_iluminacao.pk)
         else:
             logging.error("Erro no Formulário.")

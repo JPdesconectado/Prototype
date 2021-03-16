@@ -59,11 +59,11 @@ class FormularioSolicitacaoEducacao(forms.ModelForm):
     
     class Meta:
         model = SolicitacaoEducacao
-        fields = ('cadastro_pf', 'rg', 'comentario')
+        fields = ('cadastro_pf', 'rg', 'escola')
         labels = {
         "cadastro_pf": "CPF",
         "rg": "RG",
-        "comentario": "Descrição",
+        "escola": "Escola",
         }
     def __init__(self, *args, **kwargs):
         super(FormularioSolicitacaoEducacao, self).__init__(*args, **kwargs)
@@ -74,7 +74,7 @@ class FormularioSolicitacaoEducacao(forms.ModelForm):
             Row(Column('cadastro_pf', css_class='text-white-75 font-weight-light mb-5'),
                 Column('rg', css_class='text-white-75 font-weight-light mb-5'),
             ),
-            Row(Column('comentario', css_class='text-white-75 font-weight-light mb-5')),
+            Row(Column('escola', css_class='text-white-75 font-weight-light mb-5')),
             )
         self.helper.add_input(Submit('submit', 'Salvar', css_class='btn btn-light btn-xl'))
 

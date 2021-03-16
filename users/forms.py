@@ -9,12 +9,11 @@ class ProfileUserCreationForm(UserCreationForm):
     password2 = forms.CharField(label='Confirmar Senha', widget=forms.PasswordInput)
     class Meta:
             model = ProfileUser
-            fields = ('username', 'nome', 'email',)
+            fields = ('nome', 'email',)
             labels = {
              "nome": "Nome Completo",
             }
             help_texts = {
-            'username': None,
             'nome': None,
             'email': None,
             'password1': None,
@@ -26,7 +25,6 @@ class ProfileUserCreationForm(UserCreationForm):
         self.helper.form_method = 'post'
         self.helper.attrs = {'novalidate': ''}
         self.helper.layout = Layout(
-            Row(Column('username', css_class='text-white-75 font-weight-light mb-3')),
             Row(Column('nome', css_class='text-white-75 font-weight-light mb-3')),
             Row(Column('email', css_class='text-white-75 font-weight-light mb-3')),
             Row(Column('password1', css_class='text-white-75 font-weight-light mb-3')),
@@ -39,7 +37,7 @@ class ProfileUserChangeForm(UserChangeForm):
 
     class Meta:
         model = ProfileUser
-        fields = ('username', 'nome', 'email',)        
+        fields = ('nome', 'email',)        
 
     def __init__(self, *args, **kwargs):
         super(ProfileUserChangeForm, self).__init__(*args, **kwargs)
@@ -47,7 +45,6 @@ class ProfileUserChangeForm(UserChangeForm):
         self.helper.form_method = 'post'
         self.helper.attrs = {'novalidate': ''}
         self.helper.layout = Layout(
-            Row(Column('username', css_class='text-white-75 font-weight-light mb-3')),
             Row(Column('nome', css_class='text-white-75 font-weight-light mb-3')),
             Row(Column('email', css_class='text-white-75 font-weight-light mb-3')),
             Row(Column('password1', css_class='text-white-75 font-weight-light mb-3')),
